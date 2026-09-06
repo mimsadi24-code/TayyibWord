@@ -1,0 +1,18 @@
+name: TayyibWord Build Check
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check runner
+        run: |
+          uname -a
+          uname -m
+          nproc
+          free -h
+          df -h
+          clang --version
+          cmake --version
