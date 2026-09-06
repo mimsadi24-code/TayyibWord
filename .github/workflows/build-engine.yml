@@ -69,6 +69,8 @@ jobs:
           name: TayyibWord-ARM64-Engine
           path: |
             collabora-online/engine/instdir
+            collabora-online/engine/android/obj/local/arm64-v8a/liblo-native-code.so
+            collabora-online/engine/CustomTarget/instsetoo_native/setup/setuprc
             collabora-online/engine/workdir/LinkTarget/Library
           if-no-files-found: warn
           retention-days: 7
