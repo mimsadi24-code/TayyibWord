@@ -52,7 +52,11 @@ jobs:
         with:
           path: |
             collabora-online/engine/instdir
-            collabora-online/engine/workdir
+            collabora-online/engine/include
+            collabora-online/engine/workdir/UnpackedTarball/poco
+            collabora-online/engine/workdir/UnpackedTarball/zstd
+            collabora-online/engine/workdir/UnpackedTarball/libpng
+            collabora-online/engine/workdir/LinkTarget/StaticLibrary
             collabora-online/engine/CustomTarget
             collabora-online/engine/android/obj
           key: TayyibWord-ARM64-engine-${{ steps.source.outputs.rev }}-ndk27
