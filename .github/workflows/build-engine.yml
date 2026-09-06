@@ -61,3 +61,14 @@ jobs:
         working-directory: collabora-online/engine
         run: |
           make -j2
+
+    
+      - name: Upload ARM64 engine artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TayyibWord-ARM64-Engine
+          path: |
+            collabora-online/engine/instdir
+            collabora-online/engine/workdir/LinkTarget/Library
+          if-no-files-found: warn
+          retention-days: 7
