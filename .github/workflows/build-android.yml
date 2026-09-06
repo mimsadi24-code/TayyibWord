@@ -45,8 +45,8 @@ jobs:
 
           sdkmanager \
             "platform-tools" \
-            "platforms;android-37" \
-            "build-tools;37.0.0" \
+            "platforms;android-35" \
+            "build-tools;35.0.0" \
             "ndk;27.2.12479018" \
             "ndk;29.0.14206865"
 
