@@ -41,7 +41,24 @@ jobs:
           yes | sdkmanager --licenses >/dev/null || true
           sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3" "ndk;27.2.12479018"
 
+      - name: Get engine source revision
+        id: source
+        working-directory: collabora-online/engine
+        run: echo "rev=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore ARM64 engine cache
+        id: engine-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            collabora-online/engine/instdir
+            collabora-online/engine/workdir
+            collabora-online/engine/CustomTarget
+            collabora-online/engine/android/obj
+          key: TayyibWord-ARM64-engine-${{ steps.source.outputs.rev }}-ndk27
+
       - name: Configure ARM64 engine
+        if: steps.engine-cache.outputs.cache-hit != 'true'
         working-directory: collabora-online/engine
         env:
           ANDROID_HOME: /home/runner/android-sdk
@@ -58,19 +75,16 @@ jobs:
           ./autogen.sh
 
       - name: Build ARM64 engine
+        if: steps.engine-cache.outputs.cache-hit != 'true'
         working-directory: collabora-online/engine
         run: |
           make -j2
 
     
-      - name: Upload ARM64 engine artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: TayyibWord-ARM64-Engine
-          path: |
-            collabora-online/engine/instdir
-            collabora-online/engine/android/obj/local/arm64-v8a/liblo-native-code.so
-            collabora-online/engine/CustomTarget/instsetoo_native/setup/setuprc
-            collabora-online/engine/workdir/LinkTarget/Library
-          if-no-files-found: warn
-          retention-days: 7
+      - name: Verify ARM64 engine output
+        working-directory: collabora-online/engine
+        run: |
+          test -f instdir/program/setuprc
+          test -f workdir/LinkTarget/StaticLibrary/liblibpng.a
+          test -f android/obj/local/arm64-v8a/liblo-native-code.so
+          echo "ARM64 engine output verified"
