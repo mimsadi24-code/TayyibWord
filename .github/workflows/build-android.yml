@@ -44,11 +44,8 @@ jobs:
           sdkmanager \
             "platform-tools" \
             "platforms;android-30" \
-            "platforms;android-37" \
             "build-tools;30.0.3" \
-            "build-tools;37.0.0" \
             "ndk;27.2.12479018" \
-            "ndk;29.0.14206865"
 
       - name: Get engine source revision
         id: source
