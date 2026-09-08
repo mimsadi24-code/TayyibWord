@@ -133,12 +133,13 @@ jobs:
           export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
           chmod +x gradlew
           ./gradlew assembleDebug --stacktrace
+          ./gradlew :lib:assembleDebug --stacktrace
 
       - name: Find APK
         run: |
           find "$GITHUB_WORKSPACE/collabora-online" \
             -type f \
-            \( -name "*.apk" -o -name "*.aab" \) \
+            \( -name "*.apk" -o -name "*.aab" -o -name "*.aar" \) \
             -print
 
       - name: Upload APK
@@ -148,4 +149,5 @@ jobs:
           path: |
             collabora-online/**/*.apk
             collabora-online/**/*.aab
+            collabora-online/android/lib/build/outputs/aar/*.aar
           if-no-files-found: error
